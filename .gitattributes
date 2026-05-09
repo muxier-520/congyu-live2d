@@ -1,0 +1,9 @@
+*.exe filter=lfs diff=lfs merge=lfs -text
+launcher/*.dll filter=lfs diff=lfs merge=lfs -text
+launcher/*.pak filter=lfs diff=lfs merge=lfs -text
+launcher/*.bin filter=lfs diff=lfs merge=lfs -text
+launcher/*.dat filter=lfs diff=lfs merge=lfs -text
+launcher/version filter=lfs diff=lfs merge=lfs -text
+launcher/vk_swiftshader.dll filter=lfs diff=lfs merge=lfs -text
+launcher/vulkan-1.dll filter=lfs diff=lfs merge=lfs -text
+launcher/locales/*.pak filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Get-Process -Id 41656 -ErrorAction SilentlyContinue | Select-Object Id,ProcessName; Get-Process -Id 15932 -ErrorAction SilentlyContinue | Select-Object Id,ProcessName\")",
+      "Bash(handle -a \"app.asar\")",
+      "Bash(handle64 -a \"app.asar\")",
+      "Bash(powershell -Command '& {Get-Process | Where-Object { $_.Id -eq 41656 -or $_.Id -eq 15932 }}')",
+      "Bash(powershell -Command '& { Get-Process | Where-Object { $_.ProcessName -match '\\\\''node|electron|python'\\\\'' } | Select-Object Id,ProcessName }')",
+      "Bash(powershell -Command '& { Get-Process -Name node | Select-Object Id, @{N='\\\\''CommandLine'\\\\'';E={ \\(Get-WmiObject Win32_Process -Filter \"ProcessId = $\\($_.Id\\)\"\\).CommandLine }} }')",
+      "Bash(node -e \"try { require\\('fs'\\).readFileSync\\('galgame.js','utf8'\\); new Function\\(require\\('fs'\\).readFileSync\\('galgame.js','utf8'\\)\\); console.log\\('galgame.js: OK'\\); } catch\\(e\\) { console.log\\('galgame.js: ERROR -', e.message\\); }\")"
+    ]
+  }
+}

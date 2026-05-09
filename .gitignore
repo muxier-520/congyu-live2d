@@ -1,0 +1,66 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Build artifact
+app.asar
+src_run/
+
+# Audio & generated files
+audio/
+output/
+uploads/
+bug_reports/
+
+# Logs
+*.log
+debug.log
+gpt_error.log
+gpt_out.log
+server_err.log
+server_out.log
+exe_launch.log
+
+# Test files
+test_*
+tts_*.wav
+test_body.json
+tts_req.json
+
+# IDE
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# Python
+runtime/
+__pycache__/
+*.pyc
+
+# Backup asar files
+launcher/resources/*.asar
+launcher/resources/*.asar.*
+
+# Large model files
+model/
+
+# Audio samples (large WAV files) - except the reference audio
+*.wav
+!src/models/sounds/congyu_ref.wav
+
+# Duplicate app copies (backup/snapshots)
+app_check/
+launcher/resources/app_check/
+launcher/resources/app_current/
+launcher/resources/app_extract/
+launcher/resources/app_extract_step2/
+launcher/resources/app_verify/
+launcher/resources/app.asar.unpacked/
+
+# Generated files
+~$*

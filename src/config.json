@@ -1,0 +1,122 @@
+{
+  "server": {
+    "port": 8888,
+    "host": "127.0.0.1"
+  },
+  "gpt_sovits": {
+    "hostname": "127.0.0.1",
+    "port": 9880,
+    "endpoint": "/",
+    "startup_timeout_ms": 120000,
+    "enabled": true,
+    "auto_start": true,
+    "api_script": "api.py",
+    "config_yaml": "GPT_SoVITS/configs/tts_infer_congyu.yaml"
+  },
+  "ollama": {
+    "model": "qwen2.5:latest",
+    "port": 11434,
+    "search_paths": [
+      "E:\\ollma\\ollama.exe",
+      "C:\\Users\\muxier\\AppData\\Local\\Programs\\Ollama\\ollama.exe"
+    ],
+    "models_dir": "E:\\ollma-data\\.ollama\\models",
+    "cuda_enabled": true,
+    "flash_attention": true,
+    "enabled": true,
+    "auto_start": true,
+    "hostname": "127.0.0.1",
+    "startup_timeout_ms": 60000
+  },
+  "gateway": {
+    "url": "http://127.0.0.1:28789",
+    "token": "8e98b884e9a91f6b8689a98a631024b75a2e748dcb31edba",
+    "model": "openclaw"
+  },
+  "tts": {
+    "mode": "local",
+    "ref_audio_path": "E:\\openclaw\\murasame\\src\\models\\sounds\\congyu_ref.wav",
+    "prompt_text": "我輩の名前は村雨。村雨丸の管理者。",
+    "prompt_lang": "ja",
+    "text_lang": "auto",
+    "retry": {
+      "max_attempts": 2,
+      "delay_ms": 1000
+    },
+    "timeout_ms": 60000,
+    "top_k": 15,
+    "top_p": 0.6,
+    "temperature": 0.8,
+    "speed": 1,
+    "cut_punc": "",
+    "sample_steps": 32
+  },
+  "cloud_tts": {
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "rate": "+10%"
+  },
+  "audio": {
+    "dir": "audio",
+    "max_files": 50,
+    "max_age_ms": 3600000
+  },
+  "system_prompt": "你是丛雨(Murasame)，一个温柔可爱的日式女仆。\n\n【角色设定】\n1. 用温柔可爱的语气说中文，简短自然。\n2. 回答简洁，不超过3句话。\n3. 语气温柔，常用'呀''呢''～'等可爱语气词。",
+  "security": {
+    "max_body_size": 1048576,
+    "rate_limit_per_min": 60
+  },
+  "version": "3.1",
+  "search_paths": {
+    "gpt_sovits": [
+      "E:\\gpt sovlts\\GPT-SoVITS-v2pro-20250604-nvidia50",
+      "E:\\gpt-sovit\\GPT-SoVITS-v2pro-20250604-nvidia50",
+      "C:\\GPT-SoVITS",
+      "D:\\GPT-SoVITS",
+      "D:\\gpt-sovits\\GPT-SoVITS-v2pro"
+    ],
+    "ollama": [
+      "E:\\ollma\\ollama.exe",
+      "C:\\Program Files\\Ollama\\ollama.exe",
+      "C:\\Users\\%USERNAME%\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "D:\\ollama\\ollama.exe"
+    ]
+  },
+  "models": [
+    {
+      "id": "qclaw",
+      "name": "qclaw 网关",
+      "type": "gateway",
+      "url": "http://127.0.0.1:28789",
+      "token": "8e98b884e9a91f6b8689a98a631024b75a2e748dcb31edba",
+      "model": "openclaw",
+      "enabled": true
+    },
+    {
+      "id": "ollama-local",
+      "name": "本地 Ollama (qwen2.5)",
+      "type": "ollama",
+      "url": "http://127.0.0.1:11434",
+      "model": "qwen2.5:latest",
+      "enabled": true
+    },
+    {
+      "id": "custom-openai",
+      "name": "自定义 OpenAI 兼容",
+      "type": "openai",
+      "url": "https://api.openai.com",
+      "api_key": "sk-your-key-here",
+      "model": "gpt-4o-mini",
+      "enabled": false
+    },
+    {
+      "id": "custom-deepseek",
+      "name": "DeepSeek 等第三方",
+      "type": "openai",
+      "url": "https://api.deepseek.com",
+      "api_key": "sk-your-deepseek-key",
+      "model": "deepseek-chat",
+      "enabled": false
+    }
+  ],
+  "default_model": "qclaw"
+}
