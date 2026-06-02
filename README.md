@@ -1,65 +1,64 @@
 # 丛雨 Live2D (Murasame)
 
-AI 聊天伴侣应用 — Live2D 虚拟形象 + 多后端 AI 对话 + GPT-SoVITS 语音合成。
+开源 AI 聊天伴侣应用 — Live2D 虚拟形象 + 多后端 AI 对话 + GPT-SoVITS 语音合成。
 
-## 功能
+## ✨ 功能
 
-- **Live2D 虚拟形象** — Pixi.js 渲染，鼠标追踪视线，7 种表情 + 12 组动作
-- **AI 多后端对话** — OpenClaw Gateway / Ollama / Cloud API (OpenAI 兼容)
-- **GPT-SoVITS 语音合成** — 本地推理，自定义音色，熔断器 + fallback 机制
-- **多对话管理** — 每对话独立系统提示词，支持切换/重命名/删除
-- **知识库** — 倒排索引全文搜索，中文 bigram 分词
-- **流式输出** — SSE 实时显示，预生成 TTS
-- **GalGame 模式** — 视觉小说风格 UI
+- 🎭 **Live2D 虚拟形象** — Pixi.js 渲染，鼠标追踪，7 种表情 + 12 组动作
+- 🤖 **AI 多后端对话** — OpenClaw Gateway / Ollama / Cloud API (DeepSeek 等)
+- 🗣️ **GPT-SoVITS 语音合成** — 本地推理，熔断器保护，3 级 fallback
+- 💬 **多对话管理** — 每对话独立系统提示词
+- 📚 **知识库** — 倒排索引全文搜索，中文 bigram 分词
+- 🎮 **GalGame 模式** — 视觉小说风格 UI
+- 🔍 **网页搜索** — DuckDuckGo 集成
+- 🖼️ **视觉分析** — 上传图片让 AI 描述
 
-## 快速开始
+## 🚀 快速开始
 
-### 前置依赖
+### 环境要求
 
-- Node.js (后端运行)
-- GPT-SoVITS v2 Pro (语音合成，可选)
-- Ollama (本地 LLM，可选)
+- Node.js ≥ 16
+- Ollama（可选，本地 AI）
+- GPT-SoVITS v2 Pro（可选，语音合成）
 
-### 启动
+### 安装
 
 ```bash
-# 推荐：自动管理所有服务
-python start.py
-
-# 开发模式：仅启动后端
-cd launcher/resources/app_current
+git clone https://github.com/muxier-520/congyu-live2d.git
+cd congyu-live2d/launcher/resources/app_current
+cp config.example.json config.json
+# 编辑 config.json 填入你的配置
 node server.js
-# 浏览器访问 http://localhost:8888
 ```
 
-### Electron 桌面版
+浏览器打开 http://localhost:8888
 
-直接运行 `丛雨Live2D.exe`，或自行打包：
+### 配置
 
-```bash
-cd launcher/resources/app_current
-npx asar pack . ../app.asar
+编辑 `config.json`，关键配置：
+
+```json
+{
+  "ollama": { "model": "qwen2.5:latest", "port": 11434 },
+  "cloud_api": {
+    "enabled": true,
+    "provider": "deepseek",
+    "api_key": "sk-your-key",
+    "model": "deepseek-chat"
+  },
+  "system_prompt": "你是丛雨(Murasame)..."
+}
 ```
 
-## 项目结构
+详见 [项目大纲.md](launcher/项目大纲.md) 获取完整配置说明。
 
-```
-murasame/
-├── README.md
-├── launcher/
-│   └── resources/app_current/     # 主应用源码
-│       ├── server.js              # 后端入口 (Node.js http, 无框架)
-│       ├── lib/                   # 基础库 (配置/日志/工具)
-│       ├── services/              # 业务逻辑 (TTS/AI/知识库/模型管理)
-│       ├── routes/                # HTTP 路由 (7 个模块)
-│       ├── js/                    # 前端脚本
-│       ├── css/                   # 样式
-│       ├── models/                # Live2D Cubism 3 模型
-│       └── index.html             # 单页应用
-└── model/                         # AI 语音模型权重 (不入 git)
-```
+## 📖 文档
 
-## 技术栈
+- [项目大纲.md](launcher/项目大纲.md) — 完整的安装、配置、API 文档
+- [GPT-SoVITS-API-Guide.md](launcher/GPT-SoVITS-API-Guide.md) — GPT-SoVITS 接口文档
+- [GPT-SoVITS-Bugs.md](launcher/GPT-SoVITS-Bugs.md) — 已知问题
+
+## 🏗️ 技术栈
 
 | 层 | 技术 |
 |----|------|
@@ -69,18 +68,25 @@ murasame/
 | TTS | GPT-SoVITS v2 Pro |
 | 桌面 | Electron 28 (可选) |
 
-## API
+## 📂 项目结构
 
-后端提供 REST API，详见 `launcher/项目大纲.md`。
+```
+congyu-live2d/
+├── launcher/resources/app_current/  # 主应用源码
+│   ├── server.js                    # 后端入口
+│   ├── lib/                         # 基础库
+│   ├── services/                    # 业务逻辑 (TTS/AI/知识库)
+│   ├── routes/                      # HTTP 路由 (7 个模块)
+│   ├── js/                          # 前端脚本
+│   ├── css/                         # 样式
+│   └── models/                      # Live2D 模型
+└── model/                           # 语音模型权重 (不入 git)
+```
 
-核心端点：
+## 🤝 贡献
 
-- `POST /api/tts` — 语音合成
-- `POST /api/gateway/v1/chat/completions` — AI 对话
-- `GET /api/knowledge/list` — 知识库
-- `GET /api/models` — 模型管理
-- `GET /api/health` — 健康检查
+欢迎提交 Issue 和 Pull Request。
 
-## 许可
+## 📄 许可证
 
-私有项目
+私有项目，未经授权禁止商业使用。
