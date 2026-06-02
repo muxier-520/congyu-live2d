@@ -1,0 +1,20 @@
+# Runtime generated
+audio/
+uploads/
+bug_reports/
+knowledge_base/
+ref_audio/
+
+# Logs
+*.log
+server_*.log
+
+# Test files
+test_*.txt
+test_*.json
+
+# Electron build tools (not needed for source)
+node_modules/
+
+# Temp
+~$*

@@ -1,66 +1,86 @@
-# 丛雨 Live2D 桌面应用
+# 丛雨 Live2D (Murasame)
 
-## 快速启动
+AI 聊天伴侣应用 — Live2D 虚拟形象 + 多后端 AI 对话 + GPT-SoVITS 语音合成。
 
-**方式一（推荐）：** 双击 `start.py`
+## 功能
 
-**方式二：** 直接双击 `丛雨Live2D.exe`（需提前运行 GPT-SoVITS + Ollama）
+- **Live2D 虚拟形象** — Pixi.js 渲染，鼠标追踪视线，7 种表情 + 12 组动作
+- **AI 多后端对话** — OpenClaw Gateway / Ollama / Cloud API (OpenAI 兼容)
+- **GPT-SoVITS 语音合成** — 本地推理，自定义音色，熔断器 + fallback 机制
+- **多对话管理** — 每对话独立系统提示词，支持切换/重命名/删除
+- **知识库** — 倒排索引全文搜索，中文 bigram 分词
+- **流式输出** — SSE 实时显示，预生成 TTS
+- **GalGame 模式** — 视觉小说风格 UI
 
-## 目录结构
+## 快速开始
 
-```
-E:\openclaw\murasame\          ← 项目根目录
-├── 丛雨Live2D.exe                # Electron 主程序
-├── start.py                      # 推荐启动脚本（自动管理服务）
-├── app.asar                     # 打包后的应用代码
-├── README.md                    # 本文件
-│
-├── launcher/                    # Electron 运行时（无需修改）
-│   ├── 丛雨Live2D.exe          # 应用入口
-│   ├── resources/              # 资源目录
-│   │   └── app.asar            # 源码包（每次打包后更新）
-│   └── *.dll                  # Chromium 运行时库
-│
-└── src/                        # 源码（用于二次开发）
-    ├── index.html              # 主页面
-    ├── server.js               # Node.js 后端
-    ├── config.json             # 配置文件
-    ├── package.json           # Node 包配置
-    ├── murasame_icon.ico/png  # 应用图标
-    ├── electron/               # Electron 主进程
-    │   ├── main.js            # 主进程脚本
-    │   └── preload.js         # 预加载脚本
-    ├── js/                    # 前端脚本
-    │   ├── app.js             # 主前端逻辑
-    │   ├── chat-config.js
-    │   ├── galgame.js
-    │   └── openclaw-features.js
-    ├── css/                   # 样式
-    ├── models/                # Live2D 模型
-    │   ├── Murasame.model3.json
-    │   ├── Murasame.moc3
-    │   ├── Murasame.4096/    # 纹理图集
-    │   ├── exp/               # 表情文件
-    │   ├── motion/            # 动作文件
-    │   └── sounds/            # 参考音频
-    ├── audio/                 # TTS 输出目录
-    └── node_modules/          # Node 依赖（用于 asar 打包）
+### 前置依赖
+
+- Node.js (后端运行)
+- GPT-SoVITS v2 Pro (语音合成，可选)
+- Ollama (本地 LLM，可选)
+
+### 启动
+
+```bash
+# 推荐：自动管理所有服务
+python start.py
+
+# 开发模式：仅启动后端
+cd launcher/resources/app_current
+node server.js
+# 浏览器访问 http://localhost:8888
 ```
 
-## 二次开发
+### Electron 桌面版
 
-修改 `src/` 中的文件后，重新打包：
+直接运行 `丛雨Live2D.exe`，或自行打包：
 
-```cmd
-cd E:\openclaw\murasame\src
-asar pack . ..\app.asar
+```bash
+cd launcher/resources/app_current
+npx asar pack . ../app.asar
 ```
 
-或双击 `src\重新打包.bat`
+## 项目结构
 
-## 依赖路径
+```
+murasame/
+├── README.md
+├── launcher/
+│   └── resources/app_current/     # 主应用源码
+│       ├── server.js              # 后端入口 (Node.js http, 无框架)
+│       ├── lib/                   # 基础库 (配置/日志/工具)
+│       ├── services/              # 业务逻辑 (TTS/AI/知识库/模型管理)
+│       ├── routes/                # HTTP 路由 (7 个模块)
+│       ├── js/                    # 前端脚本
+│       ├── css/                   # 样式
+│       ├── models/                # Live2D Cubism 3 模型
+│       └── index.html             # 单页应用
+└── model/                         # AI 语音模型权重 (不入 git)
+```
 
-GPT-SoVITS: `E:\gpt sovlts\GPT-SoVITS-v2pro-20250604-nvidia50`
-Ollama: `E:\ollma\ollama.exe`
+## 技术栈
 
-如需修改，编辑 `start.py` 中的 `GPT_SOVITS_DIRS` 和 `start.py` 中的 `node` 路径。
+| 层 | 技术 |
+|----|------|
+| 后端 | Node.js `http` 模块 (零 npm 运行时依赖) |
+| 前端 | 原生 HTML/CSS/JS + Pixi.js 7 + Live2D Cubism Core |
+| AI | OpenClaw Gateway / Ollama / OpenAI 兼容 API |
+| TTS | GPT-SoVITS v2 Pro |
+| 桌面 | Electron 28 (可选) |
+
+## API
+
+后端提供 REST API，详见 `launcher/项目大纲.md`。
+
+核心端点：
+
+- `POST /api/tts` — 语音合成
+- `POST /api/gateway/v1/chat/completions` — AI 对话
+- `GET /api/knowledge/list` — 知识库
+- `GET /api/models` — 模型管理
+- `GET /api/health` — 健康检查
+
+## 许可
+
+私有项目

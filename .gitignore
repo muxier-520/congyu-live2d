@@ -29,6 +29,8 @@ tts_req.json
 
 # IDE
 .idea/
+.claude/
+launcher/.claude/
 
 # OS
 .DS_Store
@@ -49,18 +51,22 @@ launcher/resources/*.asar.*
 # Large model files
 model/
 
-# Audio samples (large WAV files) - except the reference audio
+# Audio samples (large WAV files) - except reference audio
 *.wav
+!launcher/resources/app_current/models/sounds/congyu_ref.wav
 !src/models/sounds/congyu_ref.wav
 
-# Duplicate app copies (backup/snapshots)
+# Backup app copies (not the main source)
 app_check/
 launcher/resources/app_check/
-launcher/resources/app_current/
 launcher/resources/app_extract/
 launcher/resources/app_extract_step2/
 launcher/resources/app_verify/
 launcher/resources/app.asar.unpacked/
+launcher/app.asar.unpacked/
+
+# Claude/other AI plugins
+launcher/andrej-karpathy-skills-main/
 
 # Generated files
 ~$*

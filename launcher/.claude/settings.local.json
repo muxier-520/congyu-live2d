@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(curl -s -o NUL -w \"%{http_code}\" http://127.0.0.1:9880/)",
-      "Bash(ls \"E:/gpt sovlts/GPT-SoVITS-v2pro-20250604-nvidia50/api.py\" 2>/dev/null && echo \"api.py exists\" || echo \"api.py NOT FOUND\")",
-      "Read(//e/gpt sovlts/GPT-SoVITS-v2pro-20250604-nvidia50/**)"
-    ]
-  }
-}

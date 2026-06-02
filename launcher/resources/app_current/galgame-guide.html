@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丛雨 ✿ GALGAME 功能指南</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/galgame.css">
+    <style>
+        .guide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            color: white;
+        }
+        
+        .guide-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .guide-header h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #c084fc, #fb7185);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .guide-header p {
+            font-size: 1.2em;
+            color: var(--text-secondary);
+        }
+        
+        .guide-section {
+            background: rgba(30, 20, 50, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .guide-section h2 {
+            color: var(--primary-light);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guide-section h2::before {
+            content: '✦';
+            color: var(--accent);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s var(--ease-out);
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: var(--accent-light);
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .key-shortcut {
+            display: inline-block;
+            background: rgba(192, 132, 252, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 5px;
+            font-family: monospace;
+            color: var(--primary-light);
+        }
+        
+        .demo-area {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 30px;
+            transition: all 0.3s var(--ease-out);
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(192, 132, 252, 0.5);
+        }
+        
+        .tip-box {
+            background: rgba(96, 165, 250, 0.1);
+            border-left: 4px solid var(--info);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .tip-box strong {
+            color: var(--info);
+        }
+    </style>
+</head>
+<body>
+    <div class="galgame-bg"></div>
+    
+    <div class="guide-container">
+        <div class="guide-header">
+            <h1>🌸 丛雨 GALGAME 功能指南</h1>
+            <p>探索二次元视觉小说风格的交互体验</p>
+        </div>
+        
+        <div class="guide-section">
+            <h2>🎮 快捷键操作</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>显示/隐藏状态面板</h3>
+                    <p>按 <span class="key-shortcut">Tab</span> 键可以显示或隐藏角色状态面板，查看丛雨的好感度、心情和能量。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>视觉小说对话框</h3>
+                    <p>按 <span class="key-shortcut">Ctrl + Enter</span> 可以打开或关闭视觉小说风格的对话框。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>快速保存</h3>
+                    <p>按 <span class="key-shortcut">F5</span> 键可以显示保存提示，模拟galgame的保存功能。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>快速对话</h3>
+                    <p>在页面任意位置 <strong>双击</strong> 可以快速打开对话选择菜单。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="guide-section">
+            <h2>✨ 视觉特效</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>樱花飘落</h3>
+                    <p>背景中会有随机飘落的樱花花瓣，营造浪漫的二次元氛围。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>动态光晕</h3>
+                    <p>三种不同颜色的光晕在背景中缓慢浮动，增加梦幻感。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>消息气泡</h3>
+                    <p>聊天消息会以视觉小说风格的气泡形式显示，带有平滑的入场动画。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>玻璃拟态</h3>
+                    <p>所有面板都采用毛玻璃效果，符合现代galgame的UI设计趋势。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="guide-section">
+            <h2>🎭 角色交互</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>角色状态系统</h3>
+                    <p>丛雨拥有好感度、心情值和能量三个状态指标，会根据互动变化。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>视觉小说对话框</h3>
+                    <p>完整的视觉小说界面，包含角色立绘、对话文本和选择分支。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>音效控制</h3>
+                    <p>右下角的音效按钮可以控制界面音效的开启和关闭。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>通知系统</h3>
+                    <p>重要的操作和状态变化会通过顶部的通知条进行提示。</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="guide-section">
+            <h2>🎯 使用技巧</h2>
+            <div class="tip-box">
+                <strong>💡 提示：</strong> 丛雨的好感度会随着聊天频率和内容而变化。多进行有意义的对话可以提升好感度！
+            </div>
+            
+            <div class="tip-box">
+                <strong>🎨 个性化：</strong> 你可以通过修改CSS文件来自定义颜色主题和特效强度。
+            </div>
+            
+            <div class="tip-box">
+                <strong>📱 响应式：</strong> 界面完全支持移动设备，在手机和平板上也能获得良好的体验。
+            </div>
+            
+            <div class="demo-area">
+                <h3 style="color: var(--accent-light); margin-bottom: 15px;">🎮 快速体验</h3>
+                <p>现在就可以尝试以下操作：</p>
+                <ol style="margin-left: 20px; line-height: 2;">
+                    <li>按 <span class="key-shortcut">Tab</span> 查看角色状态</li>
+                    <li>在页面空白处 <strong>双击</strong> 打开对话菜单</li>
+                    <li>按 <span class="key-shortcut">F5</span> 体验保存功能</li>
+                    <li>点击右下角 🔊 按钮切换音效</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="guide-section" style="text-align: center;">
+            <h2>🚀 开始体验</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1em;">现在你已经了解了所有功能，开始你的丛雨galgame之旅吧！</p>
+            <a href="index.html" class="back-button">返回丛雨主界面</a>
+        </div>
+    </div>
+    
+    <script src="./js/galgame.js"></script>
+    <script>
+        // 初始化galgame背景
+        document.addEventListener('DOMContentLoaded', function() {
+            const galgameBg = document.querySelector('.galgame-bg');
+            if (galgameBg && window.initGalgameUI) {
+                const galgame = window.initGalgameUI();
+                
+                // 只初始化背景，不初始化其他交互
+                galgame.createSakuraFall();
+                
+                // 添加光晕
+                const glowEffects = document.createElement('div');
+                glowEffects.className = 'glow-effects';
+                glowEffects.innerHTML = `
+                    <div class="glow-circle glow-1"></div>
+                    <div class="glow-circle glow-2"></div>
+                    <div class="glow-circle glow-3"></div>
+                `;
+                galgameBg.appendChild(glowEffects);
+            }
+        });
+    </script>
+</body>
+</html>

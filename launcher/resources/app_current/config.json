@@ -10,7 +10,7 @@
     "startup_timeout_ms": 120000,
     "enabled": true,
     "auto_start": true,
-    "api_script": "api.py",
+    "api_script": "api_v2.py",
     "config_yaml": "GPT_SoVITS/configs/tts_infer_congyu.yaml"
   },
   "ollama": {
@@ -35,11 +35,21 @@
   },
   "tts": {
     "mode": "local",
-    "ref_audio_path": "E:\\murasame\\launcher\\sounds\\congyu_ref.wav",
+    "ref_audio_path": "E:\\openclaw\\murasame\\launcher\\resources\\app_current\\models\\sounds\\congyu_ref.wav",
     "prompt_text": "我輩の名前は村雨。村雨丸の管理者。",
     "prompt_lang": "ja",
     "text_lang": "auto",
-    "timeout_ms": 60000
+    "retry": {
+      "max_attempts": 3,
+      "delay_ms": 1000
+    },
+    "timeout_ms": 60000,
+    "top_k": 15,
+    "top_p": 0.6,
+    "temperature": 0.8,
+    "speed": 1,
+    "cut_punc": "",
+    "text_split_method": "cut5"
   },
   "cloud_tts": {
     "voice": "zh-CN-XiaoxiaoNeural",
@@ -53,24 +63,33 @@
   "system_prompt": "你是丛雨(Murasame)，一个温柔可爱的日式女仆。\n\n【角色设定】\n1. 用温柔可爱的语气说中文，简短自然。\n2. 回答简洁，不超过3句话。\n3. 语气温柔，常用'呀''呢''～'等可爱语气词。",
   "security": {
     "max_body_size": 1048576,
-    "rate_limit_per_min": 60
+    "rate_limit_per_min": 120,
+    "tts_rate_limit_per_min": 120
   },
-  "version": "3.1",
-  "search_paths": {
-    "gpt_sovits": [
-      "E:\\gpt sovlts\\GPT-SoVITS-v2pro-20250604-nvidia50",
-      "E:\\gpt-sovit\\GPT-SoVITS-v2pro-20250604-nvidia50",
-      "C:\\GPT-SoVITS",
-      "D:\\GPT-SoVITS",
-      "D:\\gpt-sovits\\GPT-SoVITS-v2pro"
-    ],
-    "ollama": [
-      "E:\\ollma\\ollama.exe",
-      "C:\\Program Files\\Ollama\\ollama.exe",
-      "C:\\Users\\%USERNAME%\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
-      "D:\\ollama\\ollama.exe"
-    ]
+  "gpu_cache": {
+    "enabled": true,
+    "max_generations": 8,
+    "vram_threshold_percent": 95,
+    "cooldown_ms": 30000
   },
+  "search": {
+    "enabled": true,
+    "provider": "duckduckgo",
+    "max_results": 5
+  },
+  "vision": {
+    "enabled": true,
+    "model": "llama3.2-vision:latest",
+    "default_prompt": "请详细描述这张图片的内容"
+  },
+  "cloud_api": {
+    "enabled": false,
+    "provider": "openai",
+    "base_url": "https://api.openai.com/v1",
+    "api_key": "",
+    "model": "gpt-4-turbo"
+  },
+  "version": "3.0",
   "models": [
     {
       "id": "qclaw",
@@ -87,7 +106,7 @@
       "type": "ollama",
       "url": "http://127.0.0.1:11434",
       "model": "qwen2.5:latest",
-      "enabled": true
+      "enabled": false
     },
     {
       "id": "custom-openai",
@@ -108,5 +127,20 @@
       "enabled": false
     }
   ],
-  "default_model": "qclaw"
+  "default_model": "qclaw",
+  "search_paths": {
+    "gpt_sovits": [
+      "E:\\gpt sovlts\\GPT-SoVITS-v2pro-20250604-nvidia50",
+      "E:\\gpt-sovit\\GPT-SoVITS-v2pro-20250604-nvidia50",
+      "C:\\GPT-SoVITS",
+      "D:\\GPT-SoVITS",
+      "D:\\gpt-sovits\\GPT-SoVITS-v2pro"
+    ],
+    "ollama": [
+      "E:\\ollma\\ollama.exe",
+      "C:\\Program Files\\Ollama\\ollama.exe",
+      "C:\\Users\\%USERNAME%\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "D:\\ollma\\ollama.exe"
+    ]
+  }
 }

@@ -1,0 +1,43 @@
+{
+  "name": "murasame-live2d",
+  "version": "1.0.0",
+  "description": "丛雨 Live2D 桌面应用 - 温柔可爱的日式女仆",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "author": "Murasame Project",
+  "license": "MIT",
+  "devDependencies": {
+    "asar": "^3.2.0",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.9.1",
+    "electron-packager": "^17.1.2"
+  },
+  "build": {
+    "appId": "com.murasame.live2d",
+    "productName": "丛雨Live2D",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!node_modules/.cache/**",
+      "!test_*.html",
+      "!test_*.wav",
+      "!debug.html"
+    ],
+    "win": {
+      "icon": "murasame_icon.ico",
+      "target": [
+        "nsis"
+      ],
+      "sign": false
+    },
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
+    }
+  }
+}
