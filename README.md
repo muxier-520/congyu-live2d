@@ -14,6 +14,28 @@
 
 ---
 
+## 📸 预览
+
+<div align="center">
+
+### 主界面
+
+![主界面](screenshots/main-interface.png)
+
+*丛雨会在你的桌面上陪伴你，随时准备和你聊天*
+
+<br/>
+
+### 模型特写
+
+![模型特写](screenshots/model-closeup.png)
+
+*精致的 Live2D 模型，支持丰富的表情和动作*
+
+</div>
+
+---
+
 ## ✨ 什么是丛雨？
 
 丛雨（Murasame）是一个运行在你桌面上的 Live2D 虚拟助手。她不仅能和你聊天，还能根据对话内容做出各种可爱的表情和动作。
@@ -191,6 +213,8 @@ congyu-live2d/
 │   ├── Murasame.model3.json # 模型配置
 │   ├── Murasame.moc3        # 模型文件
 │   └── ...                  # 表情、动作、音效
+│
+├── 📂 screenshots/           # 截图展示
 │
 ├── 📄 index.html             # 主页面
 ├── 📄 server.js              # HTTP 服务器
