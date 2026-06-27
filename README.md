@@ -1,62 +1,60 @@
-# 丛雨 Live2D (Congyu Live2D)
+<div align="center">
 
-基于 Electron 的 Live2D 桌面虚拟助手，角色为「丛雨」(Murasame)，一个温柔可爱的日式女仆 AI 对话伴侣。
+# 🌸 丛雨 Live2D
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)
+### 你的专属 AI 女仆桌面伴侣
 
-## ✨ 功能特性
+![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
+![Electron](https://img.shields.io/badge/Electron-28-47848F.svg?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg?style=flat-square)
 
-### 🎭 Live2D 模型交互
-- **点击触发表情**：点击丛雨身体不同部位，触发不同表情和动作
-  - 头部 → 害羞表情
-  - 头发 → 开心表情
-  - 胸部 → 生气表情
-  - 裙子 → 惊讶表情
-- **滚轮缩放**：使用鼠标滚轮缩放模型大小
-- **右键拖拽**：按住右键拖拽移动整个窗口位置
+*一个基于 Electron + Live2D 的智能桌面伴侣，让丛雨陪伴你的每一天*
 
-### 🤖 AI 对话
-- 支持多种 AI 服务提供商：
-  - OpenAI (GPT-4, GPT-3.5)
-  - DeepSeek
-  - 阿里通义千问
-  - 智谱AI (GLM)
-  - 月之暗面 (Kimi)
-  - SiliconFlow
-  - 自定义 API
-- 本地 Ollama 模型支持
-- 流式输出
-- 对话历史记录
+</div>
 
-### 🎵 语音合成 (TTS)
-- GPT-SoVITS 本地语音合成
-- Edge TTS 云端降级方案
-- 自动语言检测（中文/日文）
-- 熔断器保护机制
+---
 
-### 📚 知识库
-- 全文检索
-- 文档管理
-- 倒排索引
+## ✨ 什么是丛雨？
 
-### 🎨 界面设计
-- 暗色极简主题
-- 动画效果
-- 响应式布局
+丛雨（Murasame）是一个运行在你桌面上的 Live2D 虚拟助手。她不仅能和你聊天，还能根据对话内容做出各种可爱的表情和动作。
 
-## 📦 安装
+**核心亮点：**
+- 🎭 逼真的 Live2D 动画效果
+- 🤖 支持多种 AI 大模型
+- 🎙️ 语音合成说话
+- 🖱️ 丰富的交互方式
 
-### 前置要求
+---
 
-- Node.js 16+
-- npm 或 yarn
-- Python 3.8+ (用于 TTS)
-- Ollama (可选，用于本地 AI)
+## 🎮 交互方式
 
-### 安装步骤
+| 操作 | 效果 |
+|:---:|:---|
+| 🖱️ **左键点击** | 触碰丛雨，她会做出不同表情 |
+| 🔄 **滚轮滚动** | 放大或缩小丛雨 |
+| 🖱️ **右键拖拽** | 移动整个窗口位置 |
 
-1. **克隆仓库**
+**点击不同部位的反应：**
+
+```
+    ┌─────────────┐
+    │     头部     │  → 😊 害羞表情 + 摸头动作
+    ├─────────────┤
+    │     头发     │  → 😄 开心表情 + 撩发动作
+    ├─────────────┤
+    │     胸部     │  → 😠 生气表情 + 防御动作
+    ├─────────────┤
+    │     裙子     │  → 😲 惊讶表情 + 整理动作
+    └─────────────┘
+```
+
+---
+
+## 🚀 快速开始
+
+### 方式一：直接运行（推荐）
+
+1. **下载项目**
    ```bash
    git clone https://github.com/muxier-520/congyu-live2d.git
    cd congyu-live2d
@@ -72,122 +70,196 @@
    npm start
    ```
 
-### 打包为可执行文件
+### 方式二：打包成可执行文件
 
 ```bash
-# Windows
+# Windows 用户
 npm run build:win
 
-# macOS
+# macOS 用户
 npm run build:mac
 
-# Linux
+# Linux 用户
 npm run build:linux
 ```
 
-## 🚀 快速开始
+打包完成后，在 `dist` 目录中找到安装包。
 
-### 1. 配置 AI 服务
+---
 
-启动应用后，点击右上角的 ⚙️ 设置按钮：
+## ⚙️ 配置 AI 服务
 
-1. 选择 **对话程序类型**（推荐使用"大模型 API Key"）
-2. 选择 **API 提供商**（如 OpenAI、DeepSeek 等）
-3. 填写 **API Key**
-4. 点击 **"💾 保存并刷新模型"**
-5. 从下拉列表中选择模型
-6. 保存设置
+启动应用后，点击右上角的 **⚙️** 按钮进入设置：
 
-### 2. 配置 TTS（可选）
+### 第一步：选择对话类型
 
-如果需要语音合成功能：
+在「对话程序类型」下拉框中选择 **☁️ 大模型 API Key**
 
-1. 安装 GPT-SoVITS
-2. 启动 GPT-SoVITS 服务（端口 9880）
+### 第二步：配置 API
+
+```
+┌─────────────────────────────────────────────┐
+│  API 提供商:  [OpenAI          ▼]           │
+│                                             │
+│  API Key:     [sk-xxxxxxxxxxxxxxx]          │
+│                                             │
+│  API 地址:    [https://api.openai.com/v1]   │
+│                                             │
+│  [💾 保存并刷新模型]  ✅ 获取到 50 个模型    │
+│                                             │
+│  选择模型:    [gpt-4o-mini       ▼]         │
+│                                             │
+│              [  保存设置  ]                  │
+└─────────────────────────────────────────────┘
+```
+
+### 支持的 AI 服务商
+
+| 服务商 | 基础地址 | 推荐模型 |
+|:---:|:---|:---:|
+| OpenAI | api.openai.com | gpt-4o-mini |
+| DeepSeek | api.deepseek.com | deepseek-chat |
+| 通义千问 | dashscope.aliyuncs.com | qwen-plus |
+| 智谱AI | open.bigmodel.cn | glm-4-flash |
+| 月之暗面 | api.moonshot.cn | moonshot-v1-8k |
+| SiliconFlow | api.siliconflow.cn | Qwen2.5-7B |
+| Ollama | localhost:11434 | 自定义 |
+
+---
+
+## 🎵 语音合成（可选）
+
+丛雨支持语音合成，可以用声音回复你。
+
+### 支持的 TTS 引擎
+
+| 引擎 | 特点 | 配置难度 |
+|:---:|:---|:---:|
+| **GPT-SoVITS** | 高质量中文/日文语音 | ⭐⭐⭐ |
+| **Edge TTS** | 免费云端语音 | ⭐ |
+
+### 快速配置 Edge TTS
+
+1. 安装 Python 3.8+
+2. 安装 edge-tts：
+   ```bash
+   pip install edge-tts
+   ```
 3. 在设置中启用 TTS
 
-### 3. 使用 Ollama（可选）
+### 配置 GPT-SoVITS
 
-如果想使用本地 AI 模型：
+1. 下载 [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
+2. 启动服务（默认端口 9880）
+3. 在设置中配置参考音频
 
-1. 安装 Ollama：https://ollama.ai
-2. 拉取模型：`ollama pull qwen2.5`
-3. 在设置中选择 "Ollama 本地模型"
+---
 
 ## 📁 项目结构
 
 ```
 congyu-live2d/
-├── electron/           # Electron 主进程
-│   ├── main.js        # 主进程入口
-│   └── preload.js     # 预加载脚本
-├── js/                 # 前端 JavaScript
-│   ├── app.js         # 主应用逻辑
-│   ├── galgame.js     # VN 风格对话桥接
-│   └── openclaw-features.js  # 模型管理功能
-├── css/                # 样式文件
-│   ├── style.css      # 基础样式
-│   ├── galgame.css    # VN 增强样式
-│   ├── enhanced.css   # 暗色极简覆盖
-│   └── animations.css # 动画效果
-├── lib/                # 核心库
-│   ├── config.js      # 配置管理
-│   ├── logger.js      # 日志系统
-│   └── utils.js       # 工具函数
-├── services/           # 业务服务
-│   ├── ai.js          # AI 服务
-│   ├── tts.js         # TTS 引擎
-│   └── knowledge.js   # 知识库
-├── routes/             # HTTP 路由
-├── models/             # Live2D 模型资源
-├── index.html          # 主页面
-├── server.js           # HTTP 服务器
-└── package.json        # 项目配置
+│
+├── 📂 electron/              # Electron 主进程
+│   ├── main.js              # 应用入口
+│   └── preload.js           # 安全桥接
+│
+├── 📂 js/                    # 前端逻辑
+│   ├── app.js               # 核心应用逻辑
+│   ├── galgame.js           # VN 对话系统
+│   └── openclaw-features.js # AI 功能集成
+│
+├── 📂 css/                   # 样式文件
+│   ├── style.css            # 基础样式
+│   ├── galgame.css          # VN 风格样式
+│   ├── enhanced.css         # 暗色主题
+│   └── animations.css       # 动画效果
+│
+├── 📂 lib/                   # 核心库
+│   ├── config.js            # 配置管理
+│   ├── logger.js            # 日志系统
+│   └── utils.js             # 工具函数
+│
+├── 📂 services/              # 后端服务
+│   ├── ai.js                # AI 对话服务
+│   ├── tts.js               # 语音合成
+│   └── knowledge.js         # 知识库
+│
+├── 📂 routes/                # API 路由
+│
+├── 📂 models/                # Live2D 模型资源
+│   ├── Murasame.model3.json # 模型配置
+│   ├── Murasame.moc3        # 模型文件
+│   └── ...                  # 表情、动作、音效
+│
+├── 📄 index.html             # 主页面
+├── 📄 server.js              # HTTP 服务器
+└── 📄 package.json           # 项目配置
 ```
+
+---
 
 ## 🛠️ 技术栈
 
-- **Electron** - 桌面应用框架
-- **PIXI.js** - 2D 渲染引擎
-- **Live2D Cubism 4** - Live2D 模型 SDK
-- **Node.js** - 后端服务
-- **HTML/CSS/JS** - 前端界面
+| 类别 | 技术 |
+|:---:|:---|
+| 桌面框架 | Electron |
+| 渲染引擎 | PIXI.js 7.x |
+| 动画系统 | Live2D Cubism 4 |
+| 后端服务 | Node.js |
+| 前端技术 | HTML / CSS / JavaScript |
 
-## 📝 配置说明
+---
 
-### config.json
+## ❓ 常见问题
 
-配置文件位于应用目录，包含：
+<details>
+<summary><b>Q: 应用启动后白屏？</b></summary>
 
-```json
-{
-  "chatType": "cloud-api",
-  "cloud_api": {
-    "provider": "openai",
-    "api_key": "your-api-key",
-    "base_url": "https://api.openai.com/v1",
-    "model": "gpt-4o-mini"
-  },
-  "tts_enabled": false,
-  "modelScale": 0.25
-}
-```
+确保 Node.js 已正确安装，并且在项目目录下执行了 `npm install`。
+</details>
 
-⚠️ **注意**：请勿将 API Key 提交到公开仓库！
+<details>
+<summary><b>Q: 无法连接 AI 服务？</b></summary>
 
-## 🤝 贡献
+1. 检查 API Key 是否正确
+2. 确认网络可以访问对应服务商
+3. 检查 API 地址是否正确
+</details>
+
+<details>
+<summary><b>Q: 语音合成没有声音？</b></summary>
+
+1. 确认已安装 Python 和对应 TTS 引擎
+2. 检查 TTS 服务是否正常运行
+3. 查看设置中的 TTS 状态
+</details>
+
+<details>
+<summary><b>Q: 如何自定义丛雨的表情？</b></summary>
+
+修改 `models/` 目录下的表情配置文件（`.exp3.json`），可以添加自定义表情。
+</details>
+
+---
+
+## 🤝 参与贡献
 
 欢迎提交 Issue 和 Pull Request！
 
 1. Fork 本仓库
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
+2. 创建特性分支：`git checkout -b feature/your-feature`
+3. 提交更改：`git commit -m 'Add some feature'`
+4. 推送分支：`git push origin feature/your-feature`
 5. 创建 Pull Request
+
+---
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
+本项目采用 [MIT 许可证](LICENSE) 开源。
+
+---
 
 ## 🙏 致谢
 
@@ -196,11 +268,12 @@ congyu-live2d/
 - [Electron](https://www.electronjs.org/) - 桌面应用框架
 - [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) - 语音合成
 
-## 📧 联系方式
-
-- GitHub: [@muxier-520](https://github.com/muxier-520)
-- Issues: https://github.com/muxier-520/congyu-live2d/issues
-
 ---
 
-如果觉得有用，请给个 ⭐ Star 支持一下！
+<div align="center">
+
+**如果喜欢这个项目，请给个 ⭐ Star 支持一下！**
+
+Made with ❤️ by [muxier-520](https://github.com/muxier-520)
+
+</div>
