@@ -1,11 +1,48 @@
 {
-  "name": "murasame-live2d",
+  "name": "congyu-live2d",
   "version": "1.0.0",
-  "description": "丛雨 Live2D 桌面应用 - 温柔可爱的日式女仆",
+  "description": "丛雨 Live2D 桌面应用 - 基于 Electron 的智能对话助手",
   "main": "electron/main.js",
-  "author": "Murasame Project",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "author": "muxier-520",
   "license": "MIT",
   "dependencies": {
     "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.congyu.live2d",
+    "productName": "丛雨 Live2D",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/**/*",
+      "!.git/**/*",
+      "!dist/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "icon.png"
+    }
   }
 }

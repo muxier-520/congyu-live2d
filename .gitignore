@@ -1,11 +1,10 @@
 # 依赖目录
 node_modules/
-app/node_modules/
 
-# 环境变量
-.env
-.env.local
-.env.*.local
+# Electron 打包输出
+dist/
+build/
+out/
 
 # 日志文件
 *.log
@@ -22,36 +21,21 @@ Thumbs.db
 *.swp
 *.swo
 
+# 环境变量
+.env
+.env.local
+.env.*.local
+
+# 配置文件（包含敏感信息）
+config.json
+
+# 音频文件（太大）
+models/sounds/*.wav
+
+# 知识库文件
+knowledge_base/
+
 # 临时文件
 tmp/
 temp/
 *.tmp
-
-# Electron 打包输出
-dist/
-build/
-out/
-
-# Electron 二进制文件
-*.exe
-*.dll
-*.pak
-*.bin
-*.dat
-*.json.icd
-
-# 音频文件（太大）
-resources/app/audio/*.wav
-resources/app/models/sounds/*.wav
-
-# 知识库文件
-resources/app/knowledge_base/
-
-# 配置文件（包含敏感信息）
-resources/app/config.json
-
-# Reasonix 附件
-.reasonix/
-
-# 大型二进制文件
-locales/
