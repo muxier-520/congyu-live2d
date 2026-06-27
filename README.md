@@ -6,297 +6,262 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 ![Electron](https://img.shields.io/badge/Electron-28-47848F.svg?style=flat-square)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Windows-lightgrey.svg?style=flat-square)
 
-*一个基于 Electron + Live2D 的智能桌面伴侣，让丛雨陪伴你的每一天*
+*让可爱的丛雨陪伴你的每一天*
 
 </div>
 
 ---
 
-## 📸 预览
+## 📸 先看看效果
 
 <div align="center">
 
-### 主界面
+![丛雨主界面](screenshots/main-interface.png)
 
-![主界面](screenshots/main-interface.png)
-
-*丛雨会在你的桌面上陪伴你，随时准备和你聊天*
-
-<br/>
-
-### 模型特写
-
-![模型特写](screenshots/model-closeup.png)
-
-*精致的 Live2D 模型，支持丰富的表情和动作*
+*这就是丛雨在你桌面上的样子*
 
 </div>
 
 ---
 
-## ✨ 什么是丛雨？
+## 🤔 这是什么？
 
-丛雨（Murasame）是一个运行在你桌面上的 Live2D 虚拟助手。她不仅能和你聊天，还能根据对话内容做出各种可爱的表情和动作。
+丛雨是一个**桌面虚拟伴侣**，就像一个可爱的二次元女朋友住在你的电脑里：
 
-**核心亮点：**
-- 🎭 逼真的 Live2D 动画效果
-- 🤖 支持多种 AI 大模型
-- 🎙️ 语音合成说话
-- 🖱️ 丰富的交互方式
+- 👀 她会**看着你的鼠标**，眼睛跟着移动
+- 😊 你**点击她**，她会做出害羞、开心、生气等表情
+- 💬 你可以和她**聊天**，她会用 AI 回复你
+- 🎙️ 她还能**说话**（需要配置语音功能）
 
 ---
 
-## 🎮 交互方式
+## 🎮 怎么和她玩？
 
-| 操作 | 效果 |
+### 基本操作（超简单！）
+
+| 你想做什么 | 怎么操作 |
 |:---:|:---|
-| 🖱️ **左键点击** | 触碰丛雨，她会做出不同表情 |
-| 🔄 **滚轮滚动** | 放大或缩小丛雨 |
-| 🖱️ **右键拖拽** | 移动整个窗口位置 |
+| 💬 聊天 | 点击右上角 💬 按钮，输入文字发送 |
+| 🤗 摸摸她 | 用鼠标**左键点击**丛雨的身体 |
+| 🔍 放大/缩小 | 用鼠标**滚轮**滚动 |
+| 📦 移动窗口 | 用鼠标**右键按住**拖拽 |
 
-**点击不同部位的反应：**
+### 点她不同部位有不同反应
 
 ```
-    ┌─────────────┐
-    │     头部     │  → 😊 害羞表情 + 摸头动作
-    ├─────────────┤
-    │     头发     │  → 😄 开心表情 + 撩发动作
-    ├─────────────┤
-    │     胸部     │  → 😠 生气表情 + 防御动作
-    ├─────────────┤
-    │     裙子     │  → 😲 惊讶表情 + 整理动作
-    └─────────────┘
+        🎀 头部
+        ─────────
+        点这里 → 😊 害羞表情 + 摸头
+        
+        💇 头发  
+        ─────────
+        点这里 → 😄 开心表情 + 撩发
+        
+        👗 裙子
+        ─────────
+        点这里 → 😲 惊讶表情
 ```
 
 ---
 
-## 🚀 快速开始
+## 🚀 安装教程（新手必看！）
 
-### 方式一：直接运行（推荐）
+### 第一步：下载软件
 
-1. **下载项目**
-   ```bash
-   git clone https://github.com/muxier-520/congyu-live2d.git
-   cd congyu-live2d
-   ```
+你有两种下载方式：
+
+#### 方式 A：下载压缩包（推荐新手）
+
+1. 打开 GitHub 页面：[https://github.com/muxier-520/congyu-live2d](https://github.com/muxier-520/congyu-live2d)
+2. 点击绿色的 **<> Code** 按钮
+3. 选择 **Download ZIP**
+4. 下载完成后，**解压**到你喜欢的文件夹
+
+#### 方式 B：用 Git 下载（适合有基础的用户）
+
+打开命令提示符（CMD）或 PowerShell，输入：
+
+```bash
+# 下载项目
+git clone https://github.com/muxier-520/congyu-live2d.git
+
+# 进入文件夹
+cd congyu-live2d
+```
+
+---
+
+### 第二步：安装运行环境
+
+> ⚠️ **重要提示**：你需要先安装 Node.js，否则软件无法运行！
+
+1. **下载 Node.js**
+   - 打开官网：[https://nodejs.org](https://nodejs.org)
+   - 点击 **LTS（长期支持版）** 下载按钮
+   - 下载完成后双击安装，一路点 **Next** 即可
+
+2. **验证安装**
+   - 按 `Win + R` 键，输入 `cmd`，按回车
+   - 在黑色窗口中输入：`node -v`
+   - 如果显示版本号（如 `v18.17.0`），说明安装成功 ✅
+
+---
+
+### 第三步：安装软件
+
+1. **打开项目文件夹**
+   - 找到你下载/解压的 `congyu-live2d` 文件夹
+   - 在文件夹空白处，按住 `Shift` 键，点击鼠标右键
+   - 选择 **"在此处打开 PowerShell 窗口"** 或 **"在终端中打开"**
 
 2. **安装依赖**
+   - 在打开的窗口中，输入以下命令并按回车：
    ```bash
    npm install
    ```
+   - 等待安装完成（可能需要几分钟）
 
-3. **启动应用**
+3. **启动软件**
+   - 安装完成后，输入：
    ```bash
    npm start
    ```
-
-### 方式二：打包成可执行文件
-
-```bash
-# Windows 用户
-npm run build:win
-
-# macOS 用户
-npm run build:mac
-
-# Linux 用户
-npm run build:linux
-```
-
-打包完成后，在 `dist` 目录中找到安装包。
+   - 稍等片刻，丛雨就会出现在你的桌面上啦！
 
 ---
 
-## ⚙️ 配置 AI 服务
+## ⚙️ 设置 AI 聊天（让丛雨能说话）
 
-启动应用后，点击右上角的 **⚙️** 按钮进入设置：
+### 前置准备
 
-### 第一步：选择对话类型
+你需要一个 AI 服务的 API Key（就像账号密码一样）。推荐以下几种：
 
-在「对话程序类型」下拉框中选择 **☁️ 大模型 API Key**
+| 服务商 | 价格 | 新手推荐 |
+|:---:|:---:|:---:|
+| **DeepSeek** | 💰 便宜 | ⭐⭐⭐ |
+| **OpenAI** | 💰💰 中等 | ⭐⭐ |
+| **通义千问** | 💰 便宜 | ⭐⭐⭐ |
 
-### 第二步：配置 API
+### 获取 API Key 以 DeepSeek 为例
+
+1. 打开 [https://platform.deepseek.com](https://platform.deepseek.com)
+2. 注册账号并登录
+3. 点击左侧 **"API Keys"**
+4. 点击 **"创建 API Key"**
+5. 复制生成的 Key（以 `sk-` 开头的一串字符）
+
+### 在软件中配置
+
+1. 点击丛雨界面右上角的 **⚙️ 齿轮图标**
+2. 在「对话程序类型」选择 **☁️ 大模型 API Key**
+3. 按照下图填写：
 
 ```
-┌─────────────────────────────────────────────┐
-│  API 提供商:  [OpenAI          ▼]           │
-│                                             │
-│  API Key:     [sk-xxxxxxxxxxxxxxx]          │
-│                                             │
-│  API 地址:    [https://api.openai.com/v1]   │
-│                                             │
-│  [💾 保存并刷新模型]  ✅ 获取到 50 个模型    │
-│                                             │
-│  选择模型:    [gpt-4o-mini       ▼]         │
-│                                             │
-│              [  保存设置  ]                  │
-└─────────────────────────────────────────────┘
+┌────────────────────────────────────────────┐
+│                                            │
+│  API 提供商:  [DeepSeek        ▼]         │
+│                                            │
+│  API Key:     [sk-xxxxxxxxxxxxxx]          │
+│               (粘贴你刚才复制的 Key)        │
+│                                            │
+│  API 地址:    [自动填充，不用改]            │
+│                                            │
+│  💾 保存并刷新模型                         │
+│                                            │
+│  选择模型:    [deepseek-chat   ▼]         │
+│                                            │
+│           [  保存设置  ]                   │
+│                                            │
+└────────────────────────────────────────────┘
 ```
 
-### 支持的 AI 服务商
-
-| 服务商 | 基础地址 | 推荐模型 |
-|:---:|:---|:---:|
-| OpenAI | api.openai.com | gpt-4o-mini |
-| DeepSeek | api.deepseek.com | deepseek-chat |
-| 通义千问 | dashscope.aliyuncs.com | qwen-plus |
-| 智谱AI | open.bigmodel.cn | glm-4-flash |
-| 月之暗面 | api.moonshot.cn | moonshot-v1-8k |
-| SiliconFlow | api.siliconflow.cn | Qwen2.5-7B |
-| Ollama | localhost:11434 | 自定义 |
+4. 点击 **"💾 保存并刷新模型"**，等几秒
+5. 从下拉框中选择一个模型
+6. 点击 **"保存设置"**
+7. 关闭设置窗口，开始聊天吧！
 
 ---
 
-## 🎵 语音合成（可选）
+## 🎵 语音功能（可选）
 
-丛雨支持语音合成，可以用声音回复你。
+想让丛雨开口说话？需要配置语音合成。
 
-### 支持的 TTS 引擎
+### 最简单的方式：Edge TTS（免费）
 
-| 引擎 | 特点 | 配置难度 |
-|:---:|:---|:---:|
-| **GPT-SoVITS** | 高质量中文/日文语音 | ⭐⭐⭐ |
-| **Edge TTS** | 免费云端语音 | ⭐ |
-
-### 快速配置 Edge TTS
-
-1. 安装 Python 3.8+
-2. 安装 edge-tts：
+1. 电脑需要安装 Python（没有的话去 [python.org](https://python.org) 下载）
+2. 打开 PowerShell，输入：
    ```bash
    pip install edge-tts
    ```
-3. 在设置中启用 TTS
+3. 在软件设置中启用 TTS 即可
 
-### 配置 GPT-SoVITS
+### 高质量方式：GPT-SoVITS
 
-1. 下载 [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)
-2. 启动服务（默认端口 9880）
-3. 在设置中配置参考音频
-
----
-
-## 📁 项目结构
-
-```
-congyu-live2d/
-│
-├── 📂 electron/              # Electron 主进程
-│   ├── main.js              # 应用入口
-│   └── preload.js           # 安全桥接
-│
-├── 📂 js/                    # 前端逻辑
-│   ├── app.js               # 核心应用逻辑
-│   ├── galgame.js           # VN 对话系统
-│   └── openclaw-features.js # AI 功能集成
-│
-├── 📂 css/                   # 样式文件
-│   ├── style.css            # 基础样式
-│   ├── galgame.css          # VN 风格样式
-│   ├── enhanced.css         # 暗色主题
-│   └── animations.css       # 动画效果
-│
-├── 📂 lib/                   # 核心库
-│   ├── config.js            # 配置管理
-│   ├── logger.js            # 日志系统
-│   └── utils.js             # 工具函数
-│
-├── 📂 services/              # 后端服务
-│   ├── ai.js                # AI 对话服务
-│   ├── tts.js               # 语音合成
-│   └── knowledge.js         # 知识库
-│
-├── 📂 routes/                # API 路由
-│
-├── 📂 models/                # Live2D 模型资源
-│   ├── Murasame.model3.json # 模型配置
-│   ├── Murasame.moc3        # 模型文件
-│   └── ...                  # 表情、动作、音效
-│
-├── 📂 screenshots/           # 截图展示
-│
-├── 📄 index.html             # 主页面
-├── 📄 server.js              # HTTP 服务器
-└── 📄 package.json           # 项目配置
-```
-
----
-
-## 🛠️ 技术栈
-
-| 类别 | 技术 |
-|:---:|:---|
-| 桌面框架 | Electron |
-| 渲染引擎 | PIXI.js 7.x |
-| 动画系统 | Live2D Cubism 4 |
-| 后端服务 | Node.js |
-| 前端技术 | HTML / CSS / JavaScript |
+适合想自定义声音的用户，配置较复杂，详见 [GPT-SoVITS 项目](https://github.com/RVC-Boss/GPT-SoVITS)
 
 ---
 
 ## ❓ 常见问题
 
-<details>
-<summary><b>Q: 应用启动后白屏？</b></summary>
+### Q: 启动后一片空白/白屏？
 
-确保 Node.js 已正确安装，并且在项目目录下执行了 `npm install`。
-</details>
+**解决方法**：
+1. 确认已安装 Node.js
+2. 确认在正确的文件夹中运行了 `npm install`
+3. 尝试删除 `node_modules` 文件夹，重新运行 `npm install`
 
-<details>
-<summary><b>Q: 无法连接 AI 服务？</b></summary>
+### Q: 聊天时显示错误/没有回复？
 
-1. 检查 API Key 是否正确
-2. 确认网络可以访问对应服务商
-3. 检查 API 地址是否正确
-</details>
+**解决方法**：
+1. 检查 API Key 是否正确（不要有多余空格）
+2. 检查网络是否正常
+3. 确认 API 余额充足
 
-<details>
-<summary><b>Q: 语音合成没有声音？</b></summary>
+### Q: 怎么关闭/最小化？
 
-1. 确认已安装 Python 和对应 TTS 引擎
-2. 检查 TTS 服务是否正常运行
-3. 查看设置中的 TTS 状态
-</details>
+- 点击右上角的 **✕** 关闭
+- 点击 **─** 最小化到任务栏
 
-<details>
-<summary><b>Q: 如何自定义丛雨的表情？</b></summary>
+### Q: 丛雨挡住我工作了怎么办？
 
-修改 `models/` 目录下的表情配置文件（`.exp3.json`），可以添加自定义表情。
-</details>
+- 用**右键拖拽**可以移动窗口位置
+- 或者在设置中调整模型大小
 
 ---
 
-## 🤝 参与贡献
+## 📁 文件说明（给想研究的朋友）
 
-欢迎提交 Issue 和 Pull Request！
-
-1. Fork 本仓库
-2. 创建特性分支：`git checkout -b feature/your-feature`
-3. 提交更改：`git commit -m 'Add some feature'`
-4. 推送分支：`git push origin feature/your-feature`
-5. 创建 Pull Request
+```
+congyu-live2d/
+│
+├── electron/          ← 程序启动相关（不用管）
+├── js/                ← 核心代码
+│   ├── app.js        ← 主要功能
+│   └── ...
+├── css/               ← 界面样式
+├── models/            ← 丛雨的模型文件
+├── services/          ← AI、语音等服务
+├── index.html         ← 界面文件
+└── package.json       ← 项目配置
+```
 
 ---
 
-## 📄 许可证
+## 💬 感谢使用
 
-本项目采用 [MIT 许可证](LICENSE) 开源。
+如果这个项目对你有帮助，欢迎：
 
----
-
-## 🙏 致谢
-
-- [Live2D Inc.](https://www.live2d.com/) - Live2D SDK
-- [PIXI.js](https://pixijs.com/) - 2D 渲染引擎
-- [Electron](https://www.electronjs.org/) - 桌面应用框架
-- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS) - 语音合成
+- ⭐ 给个 Star 鼓励一下
+- 🐛 发现 Bug 请提 Issue
+- 💡 有好建议欢迎 Pull Request
 
 ---
 
 <div align="center">
 
-**如果喜欢这个项目，请给个 ⭐ Star 支持一下！**
+**享受和丛雨的每一天吧！** 🌸
 
 Made with ❤️ by [muxier-520](https://github.com/muxier-520)
 
