@@ -1,0 +1,11 @@
+{
+  "name": "murasame-live2d",
+  "version": "1.0.0",
+  "description": "丛雨 Live2D 桌面应用 - 温柔可爱的日式女仆",
+  "main": "electron/main.js",
+  "author": "Murasame Project",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^8.21.0"
+  }
+}

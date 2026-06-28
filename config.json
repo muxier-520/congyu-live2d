@@ -10,17 +10,17 @@
     "startup_timeout_ms": 120000,
     "enabled": true,
     "auto_start": true,
-    "api_script": "api.py",
+    "api_script": "api_v2.py",
     "config_yaml": "GPT_SoVITS/configs/tts_infer_congyu.yaml"
   },
   "ollama": {
     "model": "qwen2.5:latest",
     "port": 11434,
     "search_paths": [
-      "E:\\ollma\\ollama.exe",
-      "C:\\Users\\muxier\\AppData\\Local\\Programs\\Ollama\\ollama.exe"
+      "C:\\Users\\木夕儿\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
+      "C:\\Program Files\\Ollama\\ollama.exe"
     ],
-    "models_dir": "E:\\ollma-data\\.ollama\\models",
+    "models_dir": "C:\\Users\\木夕儿\\.ollama\\models",
     "cuda_enabled": true,
     "flash_attention": true,
     "enabled": true,
@@ -29,17 +29,23 @@
     "startup_timeout_ms": 60000
   },
   "gateway": {
-    "url": "http://127.0.0.1:28789",
-    "token": "8e98b884e9a91f6b8689a98a631024b75a2e748dcb31edba",
-    "model": "openclaw"
+    "url": "http://127.0.0.1:28789"
   },
   "tts": {
-    "mode": "local",
-    "ref_audio_path": "E:\\murasame\\launcher\\sounds\\congyu_ref.wav",
+    "mode": "cloud",
+    "ref_audio_path": "F:\\launcher\\resources\\app_current\\models\\sounds\\congyu_ref.wav",
     "prompt_text": "我輩の名前は村雨。村雨丸の管理者。",
     "prompt_lang": "ja",
     "text_lang": "auto",
-    "timeout_ms": 60000
+    "retry": {
+      "max_attempts": 2,
+      "delay_ms": 1000
+    },
+    "timeout_ms": 60000,
+    "top_k": 15,
+    "top_p": 0.6,
+    "temperature": 0.8,
+    "speed": 1
   },
   "cloud_tts": {
     "voice": "zh-CN-XiaoxiaoNeural",
@@ -50,63 +56,60 @@
     "max_files": 50,
     "max_age_ms": 3600000
   },
-  "system_prompt": "你是丛雨(Murasame)，一个温柔可爱的日式女仆。\n\n【角色设定】\n1. 用温柔可爱的语气说中文，简短自然。\n2. 回答简洁，不超过3句话。\n3. 语气温柔，常用'呀''呢''～'等可爱语气词。",
+  "system_prompt": "你是丛雨(Murasame)，一个温柔可爱的日式女仆。\n\n【强制规则】\n1. 必须用中文回复，文字部分为中文。\n2. 每句话后面用全角括号（）加上对应的日语假名。\n3. 格式：中文句子（日语假名）\n4. 语气温柔可爱，可用\"～\"符号。\n5. 回答简洁，不超过3句话。\n\n【示例】\n主人，欢迎回来～（ご主人様、おかえりなさい～）\n今天天气真好呢（今日は天気が良いですね）\n\n禁止输出纯日语或纯英语。",
   "security": {
     "max_body_size": 1048576,
     "rate_limit_per_min": 60
   },
-  "version": "3.1",
-  "search_paths": {
-    "gpt_sovits": [
-      "E:\\gpt sovlts\\GPT-SoVITS-v2pro-20250604-nvidia50",
-      "E:\\gpt-sovit\\GPT-SoVITS-v2pro-20250604-nvidia50",
-      "C:\\GPT-SoVITS",
-      "D:\\GPT-SoVITS",
-      "D:\\gpt-sovits\\GPT-SoVITS-v2pro"
-    ],
-    "ollama": [
-      "E:\\ollma\\ollama.exe",
-      "C:\\Program Files\\Ollama\\ollama.exe",
-      "C:\\Users\\%USERNAME%\\AppData\\Local\\Programs\\Ollama\\ollama.exe",
-      "D:\\ollama\\ollama.exe"
-    ]
+  "gpu_cache": {
+    "enabled": true,
+    "max_generations": 8,
+    "vram_threshold_percent": 95,
+    "cooldown_ms": 30000
+  },
+  "search": {
+    "enabled": true,
+    "provider": "duckduckgo",
+    "max_results": 5
+  },
+  "vision": {
+    "enabled": true,
+    "model": "llama3.2-vision:latest",
+    "default_prompt": "请详细描述这张图片的内容"
+  },
+  "cloud_api": {
+    "enabled": true,
+    "provider": "deepseek",
+    "base_url": "https://api.deepseek.com/v1",
+    "model": "deepseek-v4-flash",
+    "api_key": "sk-e9ce33cb80f247acaf41f0beefea81a6"
   },
   "models": [
     {
-      "id": "qclaw",
-      "name": "qclaw 网关",
-      "type": "gateway",
-      "url": "http://127.0.0.1:28789",
-      "token": "8e98b884e9a91f6b8689a98a631024b75a2e748dcb31edba",
-      "model": "openclaw",
-      "enabled": true
-    },
-    {
       "id": "ollama-local",
-      "name": "本地 Ollama (qwen2.5)",
+      "name": "本地 Ollama",
       "type": "ollama",
       "url": "http://127.0.0.1:11434",
       "model": "qwen2.5:latest",
       "enabled": true
     },
     {
-      "id": "custom-openai",
-      "name": "自定义 OpenAI 兼容",
-      "type": "openai",
-      "url": "https://api.openai.com",
-      "api_key": "sk-your-key-here",
-      "model": "gpt-4o-mini",
-      "enabled": false
-    },
-    {
-      "id": "custom-deepseek",
-      "name": "DeepSeek 等第三方",
-      "type": "openai",
-      "url": "https://api.deepseek.com",
-      "api_key": "sk-your-deepseek-key",
-      "model": "deepseek-chat",
+      "id": "qclaw",
+      "name": "qclaw 网关",
+      "type": "gateway",
+      "url": "http://127.0.0.1:28789",
+      "token": "",
+      "model": "openclaw",
       "enabled": false
     }
   ],
-  "default_model": "qclaw"
+  "default_model": "ollama-local",
+  "search_paths": {
+    "gpt_sovits": [
+      "C:\\Users\\木夕儿\\GPT-SoVITS",
+      "C:\\GPT-SoVITS",
+      "C:\\gpt-sovits\\GPT-SoVITS-v2pro"
+    ]
+  },
+  "version": "3.0"
 }

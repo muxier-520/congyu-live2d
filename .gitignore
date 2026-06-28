@@ -1,72 +1,23 @@
-# Node
-node_modules/
-npm-debug.log*
+# Local config (contains secrets)
+config.json
 
-# Build artifact
-app.asar
-src_run/
-
-# Audio & generated files
+# Runtime generated
 audio/
-output/
 uploads/
 bug_reports/
+knowledge_base/
+ref_audio/
 
 # Logs
 *.log
-debug.log
-gpt_error.log
-gpt_out.log
-server_err.log
-server_out.log
-exe_launch.log
+server_*.log
 
 # Test files
-test_*
-tts_*.wav
-test_body.json
-tts_req.json
+test_*.txt
+test_*.json
 
-# IDE
-.idea/
-.claude/
-launcher/.claude/
+# Electron build tools (not needed for source)
+node_modules/
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Environment
-.env
-
-# Python
-runtime/
-__pycache__/
-*.pyc
-
-# Backup asar files
-launcher/resources/*.asar
-launcher/resources/*.asar.*
-
-# Large model files
-model/
-
-# Audio samples (large WAV files) - except reference audio
-*.wav
-!launcher/resources/app_current/models/sounds/congyu_ref.wav
-!src/models/sounds/congyu_ref.wav
-
-# Backup app copies (not the main source)
-app_check/
-launcher/resources/app_check/
-launcher/resources/app_extract/
-launcher/resources/app_extract_step2/
-launcher/resources/app_verify/
-launcher/resources/app.asar.unpacked/
-launcher/app.asar.unpacked/
-
-# Claude/other AI plugins
-launcher/andrej-karpathy-skills-main/
-
-# Generated files
+# Temp
 ~$*
