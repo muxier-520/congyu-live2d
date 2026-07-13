@@ -61,27 +61,14 @@ html, body {
 
 
 
-/* ===== Drag bar — frameless window movement ===== */
-#drag-bar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 24px;
-  z-index: 999;
-  -webkit-app-region: drag;
-  pointer-events: auto;
-  background: rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  cursor: grab;
-  transition: background 0.2s;
-}
-#drag-bar:hover {
-  background: rgba(255,255,255,0.12);
-}
 
 /* ===== Canvas — fullscreen, model centered ===== */
 #live2d-canvas {
-  position: fixed !important; inset: 0 !important;
+  position: fixed !important; left: 50% !important; top: 50% !important;
+  right: auto !important; bottom: auto !important;
+  transform: translate(-50%,-50%) !important;
   width: 100% !important; height: 100% !important;
+  max-width: 400px !important; max-height: 1000px !important;
   z-index: 1 !important;
 }
 
@@ -96,6 +83,8 @@ html, body {
   flex-direction: column !important;
 }
 #vn-top-controls::before { display: none !important; }
+#vn-top-controls { cursor: grab !important; }
+#vn-top-controls:active { cursor: grabbing !important; }
 
 .vn-toggle-btn {
   width: 38px !important; height: 38px !important;
@@ -320,7 +309,7 @@ html, body {
 
 /* ===== Conversation Sidebar ===== */
 .conversation-sidebar {
-  position: fixed !important; top: 0 !important; right: 0 !important;
+  position: fixed !important; top: 0 !important; right: 0 !important; left: auto !important;
   width: 300px !important; height: 100% !important;
   background: var(--bg-panel-solid) !important;
   backdrop-filter: blur(var(--blur-heavy)) !important;

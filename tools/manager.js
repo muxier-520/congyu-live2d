@@ -48,7 +48,58 @@ function createToolManager(appRoot) {
         const stat = fs.statSync(fullPath);
         if (!stat.isFile()) return { success: false, error: `不是文件: ${file_path}` };
         if (stat.size > 1024 * 1024) return { success: false, error: '文件太大(>1MB)' };
-        return { success: true, content: fs.readFileSync(fullPath, 'utf8'), file_path };
+        return { success: true, content: fs.readFileSync(fullPath, 'utf8'), file_path, size: stat.size };
+      } catch (e) { return { success: false, error: e.message }; }
+    }
+  });
+
+  // ===== 文件写入 =====
+  tools.set('write_file', {
+    name: 'write_file',
+    description: '写入或修改本地文件内容。可以创建新文件或覆盖已有文件',
+    async execute(input) {
+      const { file_path, content, append = false } = input;
+      if (!file_path || typeof file_path !== 'string') return { success: false, error: '缺少 file_path 参数' };
+      if (content === undefined || content === null) return { success: false, error: '缺少 content 参数' };
+      try {
+        let fullPath = file_path;
+        if (!path.isAbsolute(file_path)) fullPath = path.join(appRoot, file_path);
+        const resolved = path.resolve(fullPath);
+        if (!resolved.startsWith(path.resolve(appRoot))) return { success: false, error: '访问被拒绝' };
+        // 禁止修改配置文件
+        const forbidden = ['config.json', '.env', '.git/config'];
+        if (forbidden.some(f => resolved.endsWith(f))) return { success: false, error: '不允许修改配置文件' };
+        if (append) {
+          fs.appendFileSync(fullPath, content, 'utf8');
+        } else {
+          fs.writeFileSync(fullPath, content, 'utf8');
+        }
+        const stat = fs.statSync(fullPath);
+        return { success: true, file_path, size: stat.size, action: append ? '追加' : '写入' };
+      } catch (e) { return { success: false, error: e.message }; }
+    }
+  });
+
+  // ===== 文件列表 =====
+  tools.set('list_files', {
+    name: 'list_files',
+    description: '列出指定目录中的文件和文件夹',
+    async execute(input) {
+      const { dir_path = '.' } = input;
+      try {
+        let fullPath = dir_path;
+        if (!path.isAbsolute(dir_path)) fullPath = path.join(appRoot, dir_path);
+        const resolved = path.resolve(fullPath);
+        if (!resolved.startsWith(path.resolve(appRoot))) return { success: false, error: '访问被拒绝' };
+        if (!fs.existsSync(fullPath)) return { success: false, error: `目录不存在: ${dir_path}` };
+        const stat = fs.statSync(fullPath);
+        if (!stat.isDirectory()) return { success: false, error: `不是目录: ${dir_path}` };
+        const entries = fs.readdirSync(fullPath, { withFileTypes: true }).map(e => ({
+          name: e.name,
+          type: e.isDirectory() ? 'dir' : 'file',
+          size: e.isFile() ? fs.statSync(path.join(fullPath, e.name)).size : 0
+        }));
+        return { success: true, dir_path, entries, total: entries.length };
       } catch (e) { return { success: false, error: e.message }; }
     }
   });

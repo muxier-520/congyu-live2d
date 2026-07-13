@@ -366,12 +366,12 @@ function createAI(config, state, { log, utils }) {
 
   // ==================== Cloud API 代理 (OpenAI 兼容) ====================
   const CLOUD_PRESETS = {
-    openai: { base_url: 'https://api.openai.com/v1' },
-    deepseek: { base_url: 'https://api.deepseek.com/v1' },
-    qwen: { base_url: 'https://dashscope.aliyuncs.com/compatible-mode/v1' },
-    zhipu: { base_url: 'https://open.bigmodel.cn/api/paas/v4' },
-    moonshot: { base_url: 'https://api.moonshot.cn/v1' },
-    siliconflow: { base_url: 'https://api.siliconflow.cn/v1' }
+    openai: { base_url: 'https://api.openai.com/v1', model: 'gpt-4o-mini' },
+    deepseek: { base_url: 'https://api.deepseek.com/v1', model: 'deepseek-v4-flash' },
+    qwen: { base_url: 'https://dashscope.aliyuncs.com/compatible-mode/v1', model: 'qwen-plus' },
+    zhipu: { base_url: 'https://open.bigmodel.cn/api/paas/v4', model: 'glm-4-flash' },
+    moonshot: { base_url: 'https://api.moonshot.cn/v1', model: 'moonshot-v1-8k' },
+    siliconflow: { base_url: 'https://api.siliconflow.cn/v1', model: 'Qwen/Qwen2.5-7B-Instruct' }
   };
 
   function proxyToCloud(req, res, body) {
@@ -395,9 +395,12 @@ function createAI(config, state, { log, utils }) {
         { role: 'system', content: systemContent },
         ...(d.messages || []).filter(m => m.role !== 'system')
       ];
+      // 使用预设模型名（优先），确保不会因为前端传错 model 而报错
+      const presetModel = CLOUD_PRESETS[provider]?.model;
+      const model = presetModel || config.cloud_api?.model || d.model || 'gpt-4o-mini';
       const reqBody = JSON.stringify({
         ...d,
-        model: config.cloud_api?.model || d.model || 'gpt-4o-mini',
+        model,
         messages: msgs
       });
 

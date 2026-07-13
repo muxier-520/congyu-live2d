@@ -31,6 +31,8 @@ function createMemoryService(config, state, { log, utils }) {
 ## 👥 你提到的人
 
 ## 📅 最近的事件
+
+## 💬 对话风格
 `;
   }
 
@@ -65,12 +67,16 @@ function createMemoryService(config, state, { log, utils }) {
       { p: /我是(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `身份：${m[1]}` },
       { p: /我今年(\d+)岁/g, t: m => `年龄：${m[1]}岁` },
       { p: /我在(.{1,30}?)(?:[，。！\n工作学习]|$)/g, t: m => `所在地：${m[1]}` },
-      { p: /我的生日是(.{1,20}?)(?:[，。！\n]|$)/g, t: m => `生日：${m[1]}` }
+      { p: /我的生日是(.{1,20}?)(?:[，。！\n]|$)/g, t: m => `生日：${m[1]}` },
+      { p: /我是(.+?)(?:人|的)/g, t: m => `身份：${m[1]}` }
     ],
     '💚 你的喜好': [
       { p: /我喜欢(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `喜欢：${m[1]}` },
+      { p: /我爱(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `喜欢：${m[1]}` },
       { p: /我讨厌(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `不喜欢：${m[1]}` },
-      { p: /我不喜欢(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `不喜欢：${m[1]}` }
+      { p: /我不喜欢(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `不喜欢：${m[1]}` },
+      { p: /我最(.{1,20}?)(?:了|呢|，|。|$)/g, t: m => `最喜欢：${m[1]}` },
+      { p: /(.{1,20}?)是我的最爱/g, t: m => `最爱：${m[1]}` }
     ],
     '📚 重要事实': [
       { p: /我知道(.{1,50}?)(?:[，。！\n]|$)/g, t: m => `知道：${m[1]}` }
@@ -87,26 +93,38 @@ function createMemoryService(config, state, { log, utils }) {
       { p: /我昨天(.{1,50}?)(?:[，。！\n]|$)/g, t: m => `昨天：${m[1]}` },
       { p: /我今天(.{1,50}?)(?:[，。！\n]|$)/g, t: m => `今天：${m[1]}` },
       { p: /我刚(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `刚刚：${m[1]}` },
-      { p: /我去了(.{1,50}?)(?:[，。！\n]|$)/g, t: m => `去了：${m[1]}` }
+      { p: /我去了(.{1,50}?)(?:[，。！\n]|$)/g, t: m => `去了：${m[1]}` },
+      { p: /我正在(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `正在：${m[1]}` },
+      { p: /我(.{1,20}?)了(.{1,30}?)(?:[，。！\n]|$)/g, t: m => `${m[1]}了：${m[2]}` }
+    ],
+    '💬 对话风格': [
+      { p: /叫我(.{1,10}?)(?:吧|就好|就行)/g, t: m => `称呼偏好：叫我${m[1]}` },
+      { p: /我喜欢你(.{1,20}?)(?:[，。！\n]|$)/g, t: m => `互动偏好：喜欢${m[1]}` },
+      { p: /别(.{1,10}?)(?:了|哦)/g, t: m => `不喜欢：${m[1]}` }
     ]
   };
 
   function extractMemoriesFromMessage(msg) {
     const extracted = [];
     const content = readMemoryFile();
+    const newEntries = []; // 收集所有新记忆，一次性写入
     for (const [category, patterns] of Object.entries(PATTERNS)) {
       for (const { p, t } of patterns) {
         p.lastIndex = 0;
         let m;
         while ((m = p.exec(msg)) !== null) {
           const text = t(m);
-          if (!content.includes(text)) {
-            appendToSection(category, text);
+          if (!content.includes(text) && !newEntries.some(e => e.text === text)) {
+            newEntries.push({ category, text });
             extracted.push({ category, text });
             log('INFO', `Memory: ${category} - ${text}`);
           }
         }
       }
+    }
+    // 一次性写入所有新记忆（避免多次读写文件）
+    for (const { category, text } of newEntries) {
+      appendToSection(category, text);
     }
     return extracted;
   }

@@ -1460,6 +1460,8 @@ async function initLive2D() {
 
 
   const canvas = document.getElementById('live2d-canvas');
+  const MAX_CANVAS_W = 400;
+  const MAX_CANVAS_H = 1000;
 
 
   
@@ -1478,10 +1480,20 @@ async function initLive2D() {
 
 
     backgroundAlpha: 0,
-
-
-    resizeTo: window,
   });
+  // 手动初始 resize（替代 resizeTo: window，避免拖拽中不可控的自动 resize）
+  app.renderer.resize(Math.min(window.innerWidth, MAX_CANVAS_W), Math.min(window.innerHeight, MAX_CANVAS_H));
+  // 强制 canvas 内联样式，防止 PIXI 或任何外部因素覆盖定位/尺寸
+  canvas.style.setProperty('position', 'fixed', 'important');
+  canvas.style.setProperty('left', '50%', 'important');
+  canvas.style.setProperty('top', '50%', 'important');
+  canvas.style.setProperty('right', 'auto', 'important');
+  canvas.style.setProperty('bottom', 'auto', 'important');
+  canvas.style.setProperty('transform', 'translate(-50%,-50%)', 'important');
+  canvas.style.setProperty('width', '100%', 'important');
+  canvas.style.setProperty('height', '100%', 'important');
+  canvas.style.setProperty('max-width', MAX_CANVAS_W + 'px', 'important');
+  canvas.style.setProperty('max-height', MAX_CANVAS_H + 'px', 'important');
 
 
 
@@ -1512,50 +1524,92 @@ async function initLive2D() {
     // 模型自带 ScaleFactor: 0.7，需要调整以适应屏幕
 
 
-    // 响应式缩放
+  // 响应式缩放
     const _BASE_SCALE = 0.25;
     const _BASE_HEIGHT = 900;
     window._live2dBaseScale = _BASE_SCALE;
 
     const positionModel = () => {
       // 右键拖拽时不重新定位
-      if (window._isRightDragging && window._isRightDragging()) return;
-      const h = window.innerHeight;
-      const w = window.innerWidth;
+      if (window._isRightDragging) return;
+      const h = Math.min(window.innerHeight, MAX_CANVAS_H);
+      const w = Math.min(window.innerWidth, MAX_CANVAS_W);
       const baseScale = window._live2dBaseScale || _BASE_SCALE;
       const scale = baseScale * (h / _BASE_HEIGHT);
       model.scale.set(scale);
       // model.width/height 返回的是缩放后的尺寸
       model.x = (w - model.width) / 2;
       model.y = h - model.height - 10;
+      updateControlsScale?.();
     };
+    window._positionModel = positionModel;
+    // 等比例缩放设置栏（跟随模型缩放）
+    function updateControlsScale() {
+      const el = document.getElementById('vn-top-controls');
+      if (!el) return;
+      const ratio = (window._live2dBaseScale || _BASE_SCALE) / _BASE_SCALE;
+      el.style.setProperty('transform', 'translateY(-50%) scale(' + ratio + ')', 'important');
+    }
     positionModel();
-    window.addEventListener('resize', positionModel);    
+    updateControlsScale();
+    // 自主 resize 处理（同时 resize canvas 和 reposition 模型）
+    window.addEventListener('resize', () => {
+      if (!window._isRightDragging) {
+        try { app.renderer.resize(Math.min(window.innerWidth, MAX_CANVAS_W), Math.min(window.innerHeight, MAX_CANVAS_H)); } catch {}
+        positionModel();
+      }
+    });
+
+    // 确保 vn-top-controls 始终 fixed 定位（fallback，enhanced.css 已有 !important）
+    const controls = document.getElementById('vn-top-controls');
+    if (controls) {
+      controls.style.position = 'fixed';
+      controls.style.right = '10px';
+      controls.style.top = '50%';
+      controls.style.transform = 'translateY(-50%)';
+    }
 
     // ===== 滚轮缩放模型 =====
     const canvas = document.getElementById('live2d-canvas');
     if (canvas) {
+      // 右键拖拽时阻止画布的默认事件
+      canvas.addEventListener('mousedown', (e) => {
+        if (e.button === 2) e.stopPropagation();
+      });
       canvas.addEventListener('wheel', (e) => {
         const openModals = document.querySelectorAll('.modal:not(.hidden)');
         if (openModals.length > 0) return;
-        if (window._isRightDragging && window._isRightDragging()) return;
+        if (window._isRightDragging) return;
         e.preventDefault();
+
+        // 计算新缩放值
         const scaleFactor = e.deltaY > 0 ? 0.95 : 1.05;
         const currentScale = window._live2dBaseScale || _BASE_SCALE;
         const newScale = Math.max(0.05, Math.min(2.0, currentScale * scaleFactor));
-        const rect = canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const relX = (mouseX - model.x) / model.width;
-        const relY = (mouseY - model.y) / model.height;
         window._live2dBaseScale = newScale;
-        positionModel();
-        model.x = mouseX - relX * model.width;
-        model.y = mouseY - relY * model.height;
+
+        // 直接应用缩放（不调用 positionModel，避免模型被居中重置）
+        const h = Math.min(window.innerHeight, MAX_CANVAS_H);
+        const w = Math.min(window.innerWidth, MAX_CANVAS_W);
+        const baseScale = window._live2dBaseScale;
+        const scale = baseScale * (h / _BASE_HEIGHT);
+        model.scale.set(scale);
+
+        // 保持模型相对于窗口的位置比例不变
+        // 模型原本的中心在窗口中的比例位置
+        const oldCX = model.x + model.width / 2;
+        const oldCY = model.y + model.height / 2;
+        const relCX = oldCX / w;
+        const relCY = oldCY / h;
+        // 缩放后按相同比例定位
+        model.x = relCX * w - model.width / 2;
+        model.y = relCY * h - model.height / 2;
+
         const scaleSlider = document.getElementById('cfg-model-scale');
         const scaleValue = document.getElementById('scale-value');
         if (scaleSlider) scaleSlider.value = newScale;
         if (scaleValue) scaleValue.textContent = newScale.toFixed(2);
+        updateControlsScale?.();
       }, { passive: false });
     }
 
@@ -1912,6 +1966,11 @@ function startBreathing() {
 
   const animate = () => {
     if (!model) return;
+    // 拖拽中暂停呼吸位移，防止与 mousemove 模型锁定争抢导致闪烁
+    if (window._isRightDragging) {
+      requestAnimationFrame(animate);
+      return;
+    }
     time += 0.02;
     const breath = Math.sin(time) * 0.5;
     model.y = baseY + breath; // 使用绝对位置，不累加
@@ -3328,6 +3387,11 @@ async function sendToOpenClaw(text, attachments = []) {
 
 
 
+    } // end if (!fullText) - Agent fallback
+
+
+    // 以下代码对 Agent 模式和普通模式都执行
+
     // 流式完成后 — 自动设置表情（用清理后的文本）
     if (fullText) {
       try {
@@ -3351,8 +3415,6 @@ async function sendToOpenClaw(text, attachments = []) {
         });
       } catch {}
     }
-
-    } // end if (!fullText) - Agent fallback
 
 
     
@@ -4214,7 +4276,7 @@ function initEvents() {
     }
 
     // 技能系统检查
-    const skillMatch = checkSkillTrigger?.(text);
+    const skillMatch = typeof checkSkillTrigger === 'function' ? checkSkillTrigger(text) : null;
     if (skillMatch) {
       addMessage('user', '主人', text, []);
       if (window.vnBridge) vnBridge.showVNMessage('user', text);
@@ -5088,8 +5150,8 @@ $('#btn-clear-history').addEventListener('click', () => {
     const v = parseFloat(e.target.value);
     $('#scale-value').textContent = v.toFixed(2);
     window._live2dBaseScale = v;
-    if (model && typeof positionModel === 'function') {
-      positionModel();
+    if (model && typeof window._positionModel === 'function') {
+      window._positionModel();
     }
   });
 
@@ -6066,34 +6128,16 @@ async function saveSettingsFromUI() {
   CONFIG.chatType = $('#cfg-chat-type').value || DEFAULT_CONFIG.chatType;
 
 
-  CONFIG.aiChannel = $('#cfg-ai-channel').value || DEFAULT_CONFIG.aiChannel;
+  CONFIG.aiChannel = $('#cfg-ai-channel')?.value || DEFAULT_CONFIG.aiChannel;
 
 
   
 
 
-  // OpenClaw 配置
+  // Cloud API 配置
 
 
-  CONFIG.openclawUrl = $('#cfg-openclaw-url').value || DEFAULT_CONFIG.openclawUrl;
-  CONFIG.openclawKey = $('#cfg-openclaw-key').value;
-  const openclawModelSelect = $('#cfg-openclaw-model-select');
-  CONFIG.openclawModel = (openclawModelSelect && openclawModelSelect.value) || DEFAULT_CONFIG.openclawModel;
-
-
-  CONFIG.openclawTemperature = parseFloat($('#cfg-openclaw-temperature').value) || DEFAULT_CONFIG.openclawTemperature;
-
-
-  CONFIG.openclawMaxTokens = parseInt($('#cfg-openclaw-max-tokens').value) || DEFAULT_CONFIG.openclawMaxTokens;
-
-
-  
-
-
-  // 大模型 API Key 配置
-
-
-  CONFIG.cloudProvider = $('#cfg-cloud-provider').value || DEFAULT_CONFIG.cloudProvider;
+  CONFIG.cloudProvider = $('#cfg-cloud-provider')?.value || DEFAULT_CONFIG.cloudProvider;
 
 
   const cloudApiKeyInput = $('#cfg-cloud-api-key').value.trim();
@@ -6280,7 +6324,7 @@ async function saveSettingsFromUI() {
 
 
   // 由 positionModel 自动处理响应式缩放
-  if (model && typeof positionModel === 'function') { positionModel(); }
+  if (model && typeof window._positionModel === 'function') { window._positionModel(); }
 
 
   
@@ -6359,9 +6403,6 @@ function applyTheme(theme) {
 
 
   } else if (themes[theme]) {
-
-
-    document.body.style.background = themes[theme].bg;
 
 
     document.documentElement.style.setProperty('--primary', themes[theme].primary);
@@ -6696,48 +6737,91 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch {}
   }, 2000);
 
-  // ===== 右键拖拽移动窗口 =====
+  // ===== 左键拖拽 vn-top-controls 移动窗口 =====
   if (window.electronAPI && window.electronAPI.isElectron) {
-    let isRightDragging = false;
-    let rightDragStartX = 0;
-    let rightDragStartY = 0;
-    let windowStartX = 0;
-    let windowStartY = 0;
+    let isDragging = false;
+    let startScreenX = 0;
+    let startScreenY = 0;
+    let startWinX = 0;
+    let startWinY = 0;
+    let dragRAF = false;
+    let dragDeltaX = 0;
+    let dragDeltaY = 0;
+    window._isRightDragging = false;
 
-    // 禁用右键菜单
-    document.addEventListener('contextmenu', (e) => {
+    const dragHandle = document.getElementById('vn-top-controls');
+    if (!dragHandle) return;
+
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    dragHandle.addEventListener('mousedown', (e) => {
+      // 仅左键，且不响应内部按钮点击
+      if (e.button !== 0) return;
+      if (e.target.closest('.vn-icon-btn, .vn-toggle-btn')) return;
+
+      isDragging = true;
+      startScreenX = e.screenX;
+      startScreenY = e.screenY;
+      startWinX = window.screenX;
+      startWinY = window.screenY;
+      window._isRightDragging = true;
+
+      // 记录模型 xy 位置
+      try {
+        window._saveModelX = model.x;
+        window._saveModelY = model.y;
+      } catch {}
+
       e.preventDefault();
-    });
-
-    document.addEventListener('mousedown', (e) => {
-      if (e.button === 2) {
-        isRightDragging = true;
-        rightDragStartX = e.screenX;
-        rightDragStartY = e.screenY;
-        // 获取窗口当前位置
-        window.electronAPI.getWindowPosition().then(pos => {
-          windowStartX = pos[0];
-          windowStartY = pos[1];
-        }).catch(() => {});
-        e.preventDefault();
-      }
     });
 
     document.addEventListener('mousemove', (e) => {
-      if (!isRightDragging) return;
-      const deltaX = e.screenX - rightDragStartX;
-      const deltaY = e.screenY - rightDragStartY;
-      window.electronAPI.setWindowPosition(windowStartX + deltaX, windowStartY + deltaY).catch(() => {});
+      if (!isDragging) return;
       e.preventDefault();
+      dragDeltaX = e.screenX - startScreenX;
+      dragDeltaY = e.screenY - startScreenY;
+
+      // 用 rAF 节流 IPC 调用
+      if (!dragRAF) {
+        dragRAF = true;
+        requestAnimationFrame(() => {
+          dragRAF = false;
+          window._dragPending = true;
+          window.electronAPI.setWindowPosition(
+            startWinX + dragDeltaX, startWinY + dragDeltaY
+          ).finally(() => {
+            window._dragPending = false;
+          });
+        });
+      }
+
+      // 呼吸动画已由 _isRightDragging 暂停，无需重复锁定模型位置
     });
 
     document.addEventListener('mouseup', (e) => {
-      if (e.button === 2) {
-        isRightDragging = false;
-      }
-    });
+      if (e.button !== 0 || !isDragging) return;
+      isDragging = false;
 
-    window._isRightDragging = () => isRightDragging;
+      // 拖拽结束后强制修正画布尺寸（防止拖拽中累积的尺寸偏差）
+      try {
+        if (app && app.renderer) {
+          app.renderer.resize(Math.min(window.innerWidth, MAX_CANVAS_W), Math.min(window.innerHeight, MAX_CANVAS_H));
+        }
+      } catch (err) { console.warn('[Drag] Failed to fix canvas size:', err); }
+
+      // 等待所有 pending 的移动完成后再恢复定位
+      const checkAndRestore = () => {
+        if (window._dragPending) {
+          setTimeout(checkAndRestore, 50);
+        } else {
+          window._isRightDragging = false;
+          if (typeof window._positionModel === 'function') {
+            window._positionModel();
+          }
+        }
+      };
+      checkAndRestore();
+    });
   }
 
 
